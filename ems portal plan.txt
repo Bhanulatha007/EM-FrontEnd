@@ -1,0 +1,202 @@
+Created memory file [](file:///c%3A/Users/vemes/AppData/Roaming/Code/User/workspaceStorage/0259ab4695a9ca303e1d9b9025695382/GitHub.copilot-chat/memory-tool/memories/MWIyYjAzYzAtYzNlZS00MjA3LWFjYjktNWRmYzc5MmE0ZDIw/ems-development-plan.md)
+
+Perfect! I've reviewed the **EMS_Architecture_Document** and created a **complete, phase-by-phase development plan** for parallel frontend & backend development.
+
+## 📋 **HERE'S YOUR CLEAR ROADMAP:**
+
+### **PHASE 1: FOUNDATION (Week 1-2) — START HERE**
+
+#### **Backend Team - Week 1:**
+- [ ] Prisma schema: `users`, `employees`, `departments`, `designations`, `attendance`, `leave_requests`, `payroll_records`
+- [ ] Database migrations
+- [ ] SET UP: Auth middleware, JWT logic, RBAC
+
+#### **Frontend Team - Week 1:**
+- [ ] Project structure: `/src/pages/auth`, `/src/pages/employee`, `/src/pages/hr`, `/src/pages/admin`
+- [ ] Role-based routing (redirect to correct portal after login)
+- [ ] Shared components: Button, Input, Navbar, Sidebar
+- [ ] Redux store for auth/user state
+
+#### **Both Teams - Week 2:**
+- [ ] Backend: Complete auth APIs (`POST /auth/login`, `POST /auth/refresh`, `POST /auth/logout`)
+- [ ] Frontend: Build **Login Page** + connect to backend
+- [ ] Test: Can login with correct role → redirects to correct dashboard
+
+---
+
+### **PHASE 2: EMPLOYEE PORTAL (Week 3-8)**
+
+#### **Week 3 — AUTHENTICATION COMPLETE**
+✅ Frontend & Backend sync: Login working, JWT tokens managed
+
+#### **Week 4-5: Employee Dashboard + Profile**
+| **Frontend** | **Backend** |
+|---|---|
+| Dashboard UI (welcome, attendance, leave balance, payslip preview) | GET `/employees/:id` - Get profile data |
+| My Profile form (editable fields) | PUT `/employees/:id` - Update profile |
+| Profile photo upload | POST `/employees/:id/photo` - Upload to S3 |
+| | GET `/employees/:id/dashboard-summary` - One endpoint for all dashboard data |
+
+**Mid-week sync:** Frontend calls real backend, verify data displays correctly
+
+---
+
+#### **Week 5-6: Attendance Tracking**
+| **Frontend** | **Backend** |
+|---|---|
+| Clock In / Clock Out buttons | POST `/attendance/clock-in` |
+| Monthly calendar (color-coded) | POST `/attendance/clock-out` |
+| Regularization request form | GET `/attendance/:employeeId/month/:year` |
+| | POST `/attendance/regularize` |
+
+---
+
+#### **Week 6-7: Leave Management**
+| **Frontend** | **Backend** |
+|---|---|
+| Apply Leave form (date range, reason) | POST `/leave/apply` |
+| Leave balance widget | GET `/leave/balance/:employeeId` |
+| Leave history list | GET `/leave/requests/:employeeId` |
+| Team calendar (see teammates' leaves) | GET `/leave/team-calendar/:deptId/month/:year` |
+
+---
+
+#### **Week 7-8: Payslips + Documents**
+| **Frontend** | **Backend** |
+|---|---|
+| Monthly payslip viewer | GET `/payroll/payslip/:empId/:month/:year` |
+| Payslip PDF download | GET `/payroll/payslip/:empId/:month/:year/pdf` |
+| My Documents list | GET `/documents/:employeeId` |
+| Upload document | POST `/documents/upload` |
+| E-signature flow | POST `/documents/:id/sign` |
+
+---
+
+#### **Week 8: Performance + Directory + Expenses + Settings**
+| **Frontend** | **Backend** |
+|---|---|
+| Performance goals tracker | GET/POST `/performance/goals/:empId` |
+| Employee directory with org chart | GET `/employees?search=&dept=` |
+| Expense claim form + history | POST/GET `/expenses` |
+| Settings (password, 2FA, notifications) | PUT `/employees/:id/password`, etc. |
+
+**MILESTONE:** ✅ **Complete Employee Portal** — Employees can do everything (dashboard, profile, attend, leave, payslips, docs, performance, expenses)
+
+---
+
+### **PHASE 3: HR PORTAL (Week 9-13)**
+
+#### **Week 9-10: HR Dashboard + Employee Management**
+| **Frontend** | **Backend** |
+|---|---|
+| HR Dashboard (headcount, attendance, pending approvals) | GET `/hr/dashboard-summary` |
+| Employee list (search, filter, sort) | GET `/employees?search=&dept=&status=` |
+| Add/Edit employee form | POST/PUT `/employees` |
+| Bulk import CSV | POST `/employees/bulk-import` |
+
+---
+
+#### **Week 10: Leave Approvals + Attendance Regularization**
+| **Frontend** | **Backend** |
+|---|---|
+| Pending leave requests (approve/reject) | PUT `/leave/requests/:id/approve` |
+| Attendance regularization requests | PUT `/attendance/regularize/:id/approve` |
+| Leave policy config (days, types) | POST `/leave-config/types` |
+| Shift management | POST/PUT `/shifts` |
+
+---
+
+#### **Week 11: Payroll Processing**
+| **Frontend** | **Backend** |
+|---|---|
+| Payroll run dashboard (create, approve) | POST `/payroll/run` |
+| Salary structure setup | POST `/payroll/configure-salary-structure` |
+| Generate payslips for all | POST `/payroll/runs/:id/send-slips` |
+| Bank disbursement file download | POST `/payroll/runs/:id/bank-file` |
+
+---
+
+#### **Week 12: Onboarding + Performance Reviews + Recruitment**
+| **Frontend** | **Backend** |
+|---|---|
+| Onboarding checklist for new hires | POST `/onboarding/create-portal` |
+| Create review cycle | POST `/performance/cycles` |
+| Review submission tracking | GET/PUT `/performance/reviews` |
+| Recruitment: job postings + candidate pipeline | POST/GET `/recruitment/jobs`, `/recruitment/candidates` |
+
+---
+
+#### **Week 13: Offboarding + Document Templates + Reports**
+| **Frontend** | **Backend** |
+|---|---|
+| Resignation processing | POST `/employees/:id/offboarding` |
+| FnF settlement display | POST `/employees/:id/fnf-settlement` |
+| Document templates management | POST/PUT `/documents/templates` |
+| Generate reports (attendance, payroll, attrition) | POST `/reports/headcount`, `/reports/attrition`, etc. |
+
+**MILESTONE:** ✅ **Complete HR Portal** — HR can manage entire employee lifecycle
+
+---
+
+### **PHASE 4: ADMIN (CEO) PORTAL (Week 14-15)**
+
+#### **Week 14: Executive Dashboard + Org Management**
+| **Frontend** | **Backend** |
+|---|---|
+| Executive dashboard (KPIs, trends, charts) | GET `/admin/executive-dashboard` |
+| Organization structure (departments, locations) | GET/POST `/org/departments` |
+| Full org chart | GET `/org/orgchart` |
+| Full employee directory (with salary) | GET `/employees/directory?access=admin` |
+
+---
+
+#### **Week 15: Admin Approvals + Strategic Analytics**
+| **Frontend** | **Backend** |
+|---|---|
+| Approvals center (all pending items) | GET `/admin/approvals/pending` |
+| Payroll approval 2-level check | PUT `/payroll/runs/:id/admin-approve` |
+| Performance overview (bell curve) | GET `/admin/analytics/performance-distribution` |
+| Strategic reports (attrition, costs, custom) | POST `/admin/analytics/custom` |
+| System admin (users, roles, permissions) | POST/PUT `/system/users`, `/system/roles` |
+
+**MILESTONE:** ✅ **Complete CEO Portal** — CEO has full visibility + approval authority
+
+---
+
+### **SUMMARY TABLE: What Screens You Build & When**
+
+| **Week** | **Frontend Screen** | **Backend API** | **Status** |
+|---|---|---|---|
+| **1-2** | Login, Role Routing | Auth APIs | Foundation |
+| **4** | Dashboard, Profile | GET Employee, Updates | Employee Portal Start |
+| **5** | Attendance Calendar | Clock In/Out, Regularization | Employee Portal |
+| **6** | Leave Application | Apply Leave, Balance | Employee Portal |
+| **7** | Payslips, Documents | Payroll, Document APIs | Employee Portal |
+| **8** | Performance, Expenses, Settings | Goals, Expenses, Notifications | Employee Portal ✅ |
+| **9** | HR Dashboard, Employee List | HR Summary, Employee CRUD | HR Portal Start |
+| **10** | Leave/Attendance Approvals | Approval APIs, Config | HR Portal |
+| **11** | Payroll Run, Salary Structure | Payroll Processing | HR Portal |
+| **12** | Onboarding, Reviews, Recruitment | Cycle Mgmt, ATS | HR Portal |
+| **13** | Offboarding, Templates, Reports | Settlement, Document Templates | HR Portal ✅ |
+| **14** | Executive Dashboard, Org Chart | Analytics, Structure | Admin Portal Start |
+| **15** | Approvals Center, System Admin | Approval Workflow, Users | Admin Portal ✅ |
+
+---
+
+### **YOUR FIRST TASK - START TODAY:**
+
+**👉 Tell your frontend team:**
+```
+Week 1: Setup Vite project, create role-based routing, build basic Login page UI
+```
+
+**👉 Tell your backend team:**
+```
+Week 1: Create Prisma schema, setup Express server, implement JWT auth endpoints
+```
+
+**👉 Mid-week sync (Wednesday):** Both teams test integration
+
+I've saved the **complete 18-week plan with daily tasks** in your session memory. You can reference it anytime!
+
+Need me to create specific files for any module? 🚀
