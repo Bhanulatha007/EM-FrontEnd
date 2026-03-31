@@ -9,7 +9,7 @@ function App() {
     <>
       <div>
         <Navbar />
-        <h1>Vite + React</h1>
+        <h1>Vite + Reactssss</h1>
         <LoginPage />
         <Footer />
       </div>
